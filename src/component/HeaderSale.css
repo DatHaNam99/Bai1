@@ -18,6 +18,12 @@
     opacity: 0.8;
     overflow: hidden;
 }
+.col-md-3 {
+    text-align: center;
+}
+.x {
+    margin-left: 15px;
+}
 .rowstory {
     display: flex;
     overflow: auto;
@@ -49,4 +55,8 @@
 }
 .ngan {
     text-align: center;
+}
+
+.newfood input {
+    width: 500px;
 }

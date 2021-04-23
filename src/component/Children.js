@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
@@ -6,11 +7,11 @@ import {
 
 import { axios } from '../component/axios';
 import '../component/HeaderSale.css';
+import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-router-dom";
 
 function Children() {
     const [Arr, setArr] = useState([]);
-
-    console.log("Datadfatr", Arr);
+    const [cart, setCart] = useState([]); // [{id: "ggg", name: "gggg", count: 1}]
 
     const getArr = async () => {
         const response = await axios
@@ -24,22 +25,81 @@ function Children() {
         getArr();
     }, []);
 
+    let mang = Object.keys(Arr);
 
-
+    const newArr = mang.map((key) => {
+        return { id: key, ...Arr[key] };
+    })
 
     return (
         <div className="container">
             <div>
-                <div className="rowstory">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Số lượng</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            cart.map((item) => {
+                                return (<tr>
+                                    <td>{item.name}</td>
+                                    <td>{item.count}</td>
+                                    <button
+                                        onClick={() => {
+                                            let index = cart.indexOf(item);
+                                            let cartdelete = [...cart];
+                                            if (cartdelete[index].count > 1) {
+                                                cartdelete[index].count -= 1;
+                                                setCart(cartdelete)
+                                            }
+                                            else {
+                                                cartdelete.splice(index, 1)
+                                                setCart(cartdelete)
+                                            }
+                                        }}>
+                                        Xóa
+                                    </button>
+                                </tr>)
+                            })
+                        }
+
+                    </tbody>
+                </table>
+                <button>
+                    <Link to='/newfood'>NewFood</Link>
+                </button>
+                <div className="row">
                     {
-                        Arr.k((item) =>
+                        newArr.map((item) =>
                             <div className="col-md-3">
                                 <Card>
                                     <CardImg top width="100%" src={item.urlHinhAnh} alt="Card image cap" />
                                     <CardBody>
                                         <CardTitle tag="h5">{item.ten}</CardTitle>
-                                        <CardSubtitle tag="h6" className="mb-2 text-muted">{item.moTa}</CardSubtitle>
-                                        <Button>Add Cart</Button>
+                                        <CardSubtitle tag="h6" className="mb-2 text-muted">
+                                            <i class="fas fa-stopwatch">{item.thoiGian}'</i>
+                                            <i class="fas fa-utensils x">{item.doKho}</i>
+                                        </CardSubtitle>
+                                        <CardSubtitle tag="h6" className="mb-2 text-muted">
+                                            <i class="far fa-eye">{item.luotXem / 1000}k</i>
+                                        </CardSubtitle>
+                                        <Button
+                                            onClick={() => {
+                                                let z = cart.findIndex((itemx) => itemx.id === item.id);
+                                                if (z === -1) {
+                                                    setCart([{ id: item.id, name: item.ten, count: 1 }, ...cart]);
+                                                }
+                                                else {
+                                                    let newCart = [...cart]
+                                                    newCart[z].count += 1
+                                                    setCart(newCart)
+                                                }
+                                            }}>
+                                            Add Cart</Button>
                                     </CardBody>
                                 </Card>
                             </div>
@@ -48,59 +108,9 @@ function Children() {
                 </div>
             </div>
         </div>
+
     );
+
 }
 
 export default Children;
-
-// C1: Object.keys(Arr)
-
-// C2: biến đổi luôn response.data => [{id: "", doKho: ""}] ngay lúc gọi xong api
-
-const x = {
-    "-M8tUyTcuJ5STtHBIRVE": {
-        "doKho": "Dễ",
-        "idLoaiCongThuc": "1",
-        "luotXem": "2300",
-        "moTa": "Món này ngon lắm",
-        "ngayRa": "12",
-        "ten": "Bánh cuốn",
-        "thoiGian": "20",
-        "urlHinhAnh": "https://firebasestorage.googleapis.com/v0/b/rn-app-bc1e7.appspot.com/o/banh_cuon.jpg?alt=media&token=ea5d8801-7e06-4c24-88f5-cd14129fb6c9"
-    },
-    "-M8tUyU4nvtPRHcg_FFB": {
-        "doKho": "Dễ",
-        "idLoaiCongThuc": "3",
-        "luotXem": "1800",
-        "moTa": "Món này ngon lắm",
-        "ngayRa": "3",
-        "ten": "Canh chua cá",
-        "thoiGian": "30",
-        "urlHinhAnh": "https://firebasestorage.googleapis.com/v0/b/rn-app-bc1e7.appspot.com/o/canh_chua_ca.jpg?alt=media&token=4b126363-08ac-4d34-95fa-503be32670de"
-    },
-}
-
-const y = [
-    {
-        "id": "-M8tUyTcuJ5STtHBIRVE",
-        "doKho": "Dễ",
-        "idLoaiCongThuc": "1",
-        "luotXem": "2300",
-        "moTa": "Món này ngon lắm",
-        "ngayRa": "12",
-        "ten": "Bánh cuốn",
-        "thoiGian": "20",
-        "urlHinhAnh": "https://firebasestorage.googleapis.com/v0/b/rn-app-bc1e7.appspot.com/o/banh_cuon.jpg?alt=media&token=ea5d8801-7e06-4c24-88f5-cd14129fb6c9"
-    },
-    {
-        "id": "-M8tUyU4nvtPRHcg_FFB",
-        "doKho": "Dễ",
-        "idLoaiCongThuc": "3",
-        "luotXem": "1800",
-        "moTa": "Món này ngon lắm",
-        "ngayRa": "3",
-        "ten": "Canh chua cá",
-        "thoiGian": "30",
-        "urlHinhAnh": "https://firebasestorage.googleapis.com/v0/b/rn-app-bc1e7.appspot.com/o/canh_chua_ca.jpg?alt=media&token=4b126363-08ac-4d34-95fa-503be32670de"
-    },
-]

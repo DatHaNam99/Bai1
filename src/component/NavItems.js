@@ -1,10 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {
-    Nav,
-    NavItem,
-    NavLink
-} from 'reactstrap';
 
 function NavItems() {
     return (
@@ -17,7 +12,12 @@ function NavItems() {
                     <li className="nav-item">
                         <Link to="/product" className="nav-link">Product</Link>
                     </li>
-
+                    <li className="nav-item">
+                        <Link to="/cart" className="nav-link">Cart</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/login" className="nav-link">Login</Link>
+                    </li>
                 </ul>
             </div>
         </div>
