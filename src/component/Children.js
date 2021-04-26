@@ -9,6 +9,7 @@ import { axios } from '../component/axios';
 import '../component/HeaderSale.css';
 import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-router-dom";
 
+
 function Children() {
     const [Arr, setArr] = useState([]);
     const [cart, setCart] = useState([]); // [{id: "ggg", name: "gggg", count: 1}]
@@ -30,6 +31,13 @@ function Children() {
     const newArr = mang.map((key) => {
         return { id: key, ...Arr[key] };
     })
+    const history = useHistory();
+
+    function EditFood(id) {
+        history.push("/EditFood/" + id)
+    }
+
+
 
     return (
         <div className="container">
@@ -100,6 +108,19 @@ function Children() {
                                                 }
                                             }}>
                                             Add Cart</Button>
+                                        <Button
+                                            onClick={() => {
+                                                axios.delete("https://rn-app-bc1e7.firebaseio.com/congthuc/" + item.id + ".json")
+                                                    .then(res => {
+                                                        getArr();
+                                                    })
+                                            }
+                                            }>
+                                            Delete</Button>
+                                        <Button
+                                            onClick={() => EditFood(item.id)
+                                            }> <i class="fas fa-edit"></i>
+                                        </Button>
                                     </CardBody>
                                 </Card>
                             </div>

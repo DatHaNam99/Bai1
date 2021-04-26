@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container } from 'reactstrap';
 import '../component/HeaderSale.css';
 import Axios from 'axios';
-import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function NewFood() {
     const url = " https://rn-app-bc1e7.firebaseio.com/congthuc.json"
@@ -16,7 +16,7 @@ function NewFood() {
         thoiGian: "",
         urlHinhAnh: ""
     })
-
+    const history = useHistory();
     function submit(e) {
         e.preventDefault();
         Axios.post(url, {
@@ -28,6 +28,10 @@ function NewFood() {
             ten: data.ten,
             thoiGian: data.thoiGian,
             urlHinhAnh: data.urlHinhAnh
+        }).then((res) => {
+            if (res.statusText === "OK") {
+                history.push("/");
+            }
         })
     }
 
@@ -35,10 +39,9 @@ function NewFood() {
         const newdata = { ...data };
         newdata[e.target.id] = e.target.value;
         setData(newdata);
-
-        console.log(newdata);
     }
     return (
+
         <Container>
             <div className="newfood">
                 <form onSubmit={(e) => submit(e)}>
@@ -74,10 +77,7 @@ function NewFood() {
                         <label for="usr">URL Ảnh:</label>
                         <input onChange={(e) => handle(e)} id="urlHinhAnh" value={data.name} type="text" class="form-control" />
                     </div>
-                    <button class="btn btn-primary"
-                        onClick={() => {
-                            setData(<Link to='/'></Link>)
-                        }}>Submit</button>
+                    <button class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </Container>
