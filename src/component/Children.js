@@ -13,13 +13,23 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-
 function Children() {
     const [Arr, setArr] = useState([]);
     const [cart, setCart] = useState([]); // [{id: "ggg", name: "gggg", count: 1}]
+    const [ArrDoKho, setArrDoKho] = useState([]);
+
+    const [Arr2, setArr2] = useState([]);
 
     const getArr = async () => {
         const response = await axios
             .get("/congthuc.json")
             .catch((err) => console.log("Error: ", err));
 
-        if (response && response.data) setArr(response.data);
+        if (response && response.data) {
+            let a = Object.keys(response.data);
+            const newArr = a.map((key) => {
+                return { id: key, ...response.data[key] };
+            })
+            setArr2(newArr);
+            setArr(response.data); setArrDoKho([...new Set(newArr.map(item => item.doKho))])
+        }
     };
 
     useEffect(() => {
@@ -37,12 +47,10 @@ function Children() {
         history.push("/EditFood/" + id)
     }
 
-
-
     return (
         <div className="container">
             <div>
-                <table class="table">
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -77,6 +85,12 @@ function Children() {
 
                     </tbody>
                 </table>
+                <select>
+                    {
+                        ArrDoKho.map((item) => (
+                            <option>{item}</option>
+                        ))}
+                </select>
                 <button>
                     <Link to='/newfood'>NewFood</Link>
                 </button>
@@ -89,11 +103,11 @@ function Children() {
                                     <CardBody>
                                         <CardTitle tag="h5">{item.ten}</CardTitle>
                                         <CardSubtitle tag="h6" className="mb-2 text-muted">
-                                            <i class="fas fa-stopwatch">{item.thoiGian}'</i>
-                                            <i class="fas fa-utensils x">{item.doKho}</i>
+                                            <i className="fas fa-stopwatch">{item.thoiGian}'</i>
+                                            <i className="fas fa-utensils x">{item.doKho}</i>
                                         </CardSubtitle>
                                         <CardSubtitle tag="h6" className="mb-2 text-muted">
-                                            <i class="far fa-eye">{item.luotXem / 1000}k</i>
+                                            <i className="far fa-eye">{item.luotXem / 1000}k</i>
                                         </CardSubtitle>
                                         <Button
                                             onClick={() => {
@@ -119,19 +133,20 @@ function Children() {
                                             Delete</Button>
                                         <Button
                                             onClick={() => EditFood(item.id)
-                                            }> <i class="fas fa-edit"></i>
+                                            }> <i className="fas fa-edit"></i>
                                         </Button>
                                     </CardBody>
+
                                 </Card>
+
                             </div>
                         )
                     }
                 </div>
             </div>
-        </div>
+        </div >
 
     );
-
 }
 
 export default Children;
