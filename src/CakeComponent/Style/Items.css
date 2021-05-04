@@ -1,0 +1,23 @@
+.itemss {
+    border: 2px double black;
+}
+.col-3 {
+    border-right: 2px double black;
+}
+ul li {
+    list-style: none;
+}
+.ul1 li:hover {
+    font-weight: bold;
+}
+.abc {
+    font-weight: bold;
+}
+.abc:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
+.abc button {
+    font-weight: bold;
+    border: none;
+}

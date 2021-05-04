@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from './CakeComponent/HeaderCake';
 import List_Order from './CakeComponent/List_Order';
 import Footer from './CakeComponent/Footer';
+import Item from './CakeComponent/Item';
 
 
 
@@ -19,7 +20,7 @@ function App() {
       <Container>
         <Header />
         <Switch>
-          <Route path="/" component={List_Order} />
+          <Route path="/" component={Item} />
         </Switch>
         <Footer />
       </Container>
