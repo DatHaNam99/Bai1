@@ -4,7 +4,6 @@ import './Style/Items.css'
 import { BrowserRouter as Link } from "react-router-dom";
 import { axios } from '../component/axios'
 import AllItem from '../CakeComponent/AllItems'
-import { useHistory } from "react-router-dom";
 
 function Item() {
 
@@ -23,10 +22,7 @@ function Item() {
         getArr();
     }, []);
 
-    const history = useHistory();
-    function ShowItem(name) {
-        history.push("/cate/" + name)
-    }
+    const [name, setName] = useState([,]);
 
     return (
         <>
@@ -41,17 +37,20 @@ function Item() {
                                             <li className="li1">
                                                 <div className="abc">
                                                     <button
-                                                        // onClick={() => ShowItem(item.name)
-                                                        // }
-                                                        onClick={() => <AllItem todoProps={item.name} />
+                                                        onClick={() => setName([item.name, ''])
                                                         }
                                                     >{item.name}</button>
                                                 </div>
-                                                <ul className="ul1">
+                                                <ul className="xyz">
                                                     {
-                                                        item.subcategory.map((icon) =>
-                                                            <li> <Link to="/" className="nav-link">{icon.sub_name}</Link> </li>
-                                                        )
+                                                        item.subcategory.map((icon) => {
+                                                            return (
+                                                                <button
+                                                                    onClick={() => setName([item.name, icon.sub_name])
+                                                                    }
+                                                                >{icon.sub_name}</button>
+                                                            )
+                                                        })
                                                     }
                                                 </ul>
                                             </li>
@@ -61,7 +60,7 @@ function Item() {
                             }
                         </div>
 
-                        <AllItem />
+                        <AllItem name={name} />
                     </div>
                 </Container>
             </div>

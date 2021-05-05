@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { axios } from '../component/axios'
-import { useHistory } from "react-router-dom";
 
 function AllItems(props) {
     const [listCategoriesDetail, setlistCategoriesDetail] = useState([]);
-
-    const history = useHistory();
-    console.log(props)
-
+    console.log(props[1])
+    let url = ""
+    if (props.name === [,]) {
+        url = "api/v1/items/cate"
+    }
+    else {
+        url = `api/v1/items/cate/` + props.name
+    }
     const getArr = async () => {
         const response = await axios
-            .get(`api/v1/items`)
+            .get(url)
             .catch((err) => console.log("Error: ", err));
 
         if (response && response.data) {
@@ -19,7 +22,7 @@ function AllItems(props) {
     }
     useEffect(() => {
         getArr();
-    }, []);
+    }, [props.name]);
     return (
         <div className="col-9">
             <br />
