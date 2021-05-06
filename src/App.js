@@ -21,6 +21,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" component={Item} />
+          <Route path="/items" component={Item} />
         </Switch>
         <Footer />
       </Container>

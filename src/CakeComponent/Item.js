@@ -22,7 +22,10 @@ function Item() {
         getArr();
     }, []);
 
-    const [name, setName] = useState([,]);
+    const [name, setName] = useState({
+        cate: "",
+        sub: ""
+    });
 
     return (
         <>
@@ -37,16 +40,21 @@ function Item() {
                                             <li className="li1">
                                                 <div className="abc">
                                                     <button
-                                                        onClick={() => setName([item.name, ''])
-                                                        }
-                                                    >{item.name}</button>
+                                                        onClick={() => setName({
+                                                            cate: item.name
+                                                        })}>
+                                                        {item.name}
+                                                    </button>
                                                 </div>
                                                 <ul className="xyz">
                                                     {
                                                         item.subcategory.map((icon) => {
                                                             return (
                                                                 <button
-                                                                    onClick={() => setName([item.name, icon.sub_name])
+                                                                    onClick={() => setName({
+                                                                        cate: item.name,
+                                                                        sub: icon.sub_name
+                                                                    })
                                                                     }
                                                                 >{icon.sub_name}</button>
                                                             )

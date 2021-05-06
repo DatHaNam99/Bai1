@@ -16,10 +16,10 @@ function HeaderCake() {
                         <Link to="/" className="nav-link">List Order</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">Items</Link>
+                        <Link to="/items" className="nav-link">Items</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">Recipes</Link>
+                        <Link to="/recipes" className="nav-link">Recipes</Link>
                     </li>
                 </ul>
             </nav>
